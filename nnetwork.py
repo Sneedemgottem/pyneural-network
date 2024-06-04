@@ -26,10 +26,11 @@ class Layer:
 
 
 class NeuralNetwork:
-    def __init__(self, layers: list[int], activationFunction):
+    def __init__(self, layers: list[int], activationFunction, costFunction):
         self.layers = layers # just gives size. for example, [2, 3, 2] describes 2 inputs, 3 hidden nodes and 2 outputs. 3 layers total
         self._layers = self._create_layers() # this holds the actual Layer objects
         self._activationFunction = activationFunction
+        self._costFunction = costFunction
     
     """
     Realistically, these layers represent the bridges between the neurons.
@@ -48,6 +49,16 @@ class NeuralNetwork:
             self._layers[i].send_input(res.calculate_output(self._activationFunction))
         
         return self._layers[-1].calculate_output(self._activationFunction)
+
+    def _get_cost(self, input, expected) -> float:
+        output = self.forward(input)
+        cost = 0.0
+
+        for i in range(len(output)):
+            cost += self._costFunction(output[i][0], expected[i][0])
+        
+        return cost
+
     
     # Debug
     def print_layers(self):

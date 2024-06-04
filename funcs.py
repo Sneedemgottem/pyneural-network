@@ -18,11 +18,4 @@ class CostFunctions:
     @staticmethod
     def mse_node_cost(outputActivation: float, expectedOutput) -> float:
         error = outputActivation - expectedOutput
-        return error ** 2
-    
-    @staticmethod
-    def mse_cost(nn, datapoint) -> float:
-        output = nn.forward(datapoint)
-        cost = 0
-
-        # iterate over outputs to get MSE
+        return error * error
