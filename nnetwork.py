@@ -58,7 +58,16 @@ class NeuralNetwork:
             cost += self._costFunction(output[i][0], expected[i][0])
         
         return cost
+    
+    # Calculate cost for every datapoint from dataset and return average
+    def calculate_cost(self, inputs: list[any], expected: list[any]):
+        cost = 0.0
+        dataPointLen = len(inputs)
 
+        for i in range(dataPointLen):
+            cost += self._get_cost(inputs[0], expected[0])
+
+        return cost / dataPointLen
     
     # Debug
     def print_layers(self):
